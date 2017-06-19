@@ -151,7 +151,11 @@ public class FullScreenAdManager implements IAdBusiness.IAdBusinessListener<Full
             if (adCode.contains(fullScreenAdModel.data.ads.get(i).adCode)) {
                 // 上传
                 adBusiness.toEventTracking(fullScreenAdModel.data.ads.get(i).eventTracking.clickedUrl);
-                fullScreenAdModel.data.ads.get(i).maxClicked--;
+                if (fullScreenAdModel.data.ads.get(i).maxClicked == 1) {
+                    fullScreenAdModel.data.ads.get(i).maxClicked -= 2; // 因为服务器返回0代表无限，所以 -= 2；
+                } else if (fullScreenAdModel.data.ads.get(i).maxClicked != 0) {
+                    fullScreenAdModel.data.ads.get(i).maxClicked--;
+                }
             }
         }
         saveAds(fullScreenAdModel);
@@ -165,7 +169,11 @@ public class FullScreenAdManager implements IAdBusiness.IAdBusinessListener<Full
         for (int i = 0; i < adCount; i++) {
             if (adCode.contains(fullScreenAdModel.data.ads.get(i).adCode)) {
                 adBusiness.toEventTracking(fullScreenAdModel.data.ads.get(i).eventTracking.displayedUrl);
-                fullScreenAdModel.data.ads.get(i).maxDisplayed--;
+                if (fullScreenAdModel.data.ads.get(i).maxDisplayed == 1) {
+                    fullScreenAdModel.data.ads.get(i).maxDisplayed -= 2; // 因为服务器返回0代表无限，所以 -= 2；
+                } else if (fullScreenAdModel.data.ads.get(i).maxDisplayed != 0) {
+                    fullScreenAdModel.data.ads.get(i).maxDisplayed--;
+                }
             }
         }
         saveAds(fullScreenAdModel);
